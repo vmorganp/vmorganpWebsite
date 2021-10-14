@@ -1,6 +1,7 @@
 # This is the code for the vmorganp.com website
 https://vmorganp.com
-[![terraform deploy](https://github.com/vmorganp/vmorganpcom/actions/workflows/build.yml/badge.svg)](https://github.com/vmorganp/vmorganpcom/actions/workflows/build.yml)
+
+[![terraform deploy](https://github.com/vmorganp/vmorganpwebsite/actions/workflows/build.yml/badge.svg)](https://github.com/vmorganp/vmorganpwebsite/actions/workflows/build.yml)
 
 ## Infrastructure
 - stored under /infrastructure
