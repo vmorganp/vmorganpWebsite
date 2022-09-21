@@ -55,5 +55,5 @@ resource "aws_s3_bucket_object" "website" {
   source       = "../website/hugo/vmorganpWebsite/public/${each.value}"
   etag         = filemd5("../website/hugo/vmorganpWebsite/public/${each.value}")
   source_hash  = "public-read"
-  content_type = lookup(local.mime_type, element(split(".", each.value), length(split(".", each.value)) - 1), null)
+  content_type = lookup(local.mime_types, element(split(".", each.value), length(split(".", each.value)) - 1), null)
 }
