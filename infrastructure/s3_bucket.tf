@@ -37,15 +37,23 @@ data "aws_iam_policy_document" "s3_bucket_policy" {
   }
 }
 
+locals {
+  mime_types = {
+    "html" : "text/html",
+    "css" : "text/css",
+    "js" : "text/js",
+    "xml" : "application/xml",
+  }
+}
+
 # the files that go into the bucket, these are all webpages
 resource "aws_s3_bucket_object" "website" {
   for_each = fileset("../website/hugo/vmorganpWebsite/public", "**")
 
-  bucket      = aws_s3_bucket.host_bucket.id
-  key         = each.value
-  source      = "../website/hugo/vmorganpWebsite/public/${each.value}"
-  etag        = filemd5("../website/hugo/vmorganpWebsite/public/${each.value}")
-  source_hash = "public-read"
-  # content_type = "text/html"
-  # content_type = element(split(".", each.value), length(split(".", each.value)) - 1) == "html" ? "text/html" : null
+  bucket       = aws_s3_bucket.host_bucket.id
+  key          = each.value
+  source       = "../website/hugo/vmorganpWebsite/public/${each.value}"
+  etag         = filemd5("../website/hugo/vmorganpWebsite/public/${each.value}")
+  source_hash  = "public-read"
+  content_type = lookup(local.mime_type, element(split(".", each.value), length(split(".", each.value)) - 1), null)
 }
