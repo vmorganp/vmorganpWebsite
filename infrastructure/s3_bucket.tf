@@ -12,7 +12,7 @@ resource "aws_s3_bucket" "host_bucket" {
         "KeyPrefixEquals": "/"
     },
     "Redirect": {
-        "ReplaceKeyWith": "index.html"
+        "ReplaceKeyWith": "/index.html"
     }
 }]
 EOF
