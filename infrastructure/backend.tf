@@ -1,6 +1,5 @@
 provider "aws" {
-  profile = "default"
-  region  = "us-east-1"
+  region = "us-east-1"
 }
 
 # this either needs to be done in us-east-1 or have a separate provider
