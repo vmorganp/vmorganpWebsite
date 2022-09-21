@@ -39,7 +39,7 @@ data "aws_iam_policy_document" "s3_bucket_policy" {
 
 # the files that go into the bucket, these are all webpages
 resource "aws_s3_bucket_object" "website" {
-  for_each = fileset("../website/hugo/vmorganpWebsite/public", "*")
+  for_each = fileset("../website/hugo/vmorganpWebsite/public", "**")
 
   bucket      = aws_s3_bucket.host_bucket.id
   key         = each.value

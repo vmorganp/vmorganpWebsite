@@ -1,2 +1,5 @@
 **.terraform*
 **.tfstate
+
+# Prevent hugo output from ending up here
+website/hugo/vmorganpWebsite/public/**
