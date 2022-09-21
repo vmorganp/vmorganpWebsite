@@ -6,7 +6,18 @@ resource "aws_s3_bucket" "host_bucket" {
   website {
     index_document = "index.html"
     error_document = "404.html"
+    routing_rules  = <<EOF
+[{
+    "Condition": {
+        "KeyPrefixEquals": "/"
+    },
+    "Redirect": {
+        "ReplaceKeyWith": "index.html"
+    }
+}]
+EOF
   }
+
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
