@@ -2,24 +2,33 @@ name: terraform deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: apply
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.access_key }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.secret_key }}
-        TERRAFORM_VERSION: 1.0.4
-      run: |
-        wget "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -O /tmp/terraform.zip && unzip /tmp/terraform.zip -d/usr/bin && rm /tmp/terraform.zip
-        export branch=${GITHUB_REF##*/}
-        echo $branch 
-        cd infrastructure
-        terraform init -no-color
-        terraform apply -no-color -auto-approve
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "0.103.1"
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.2.9
+
+      - name: Hugo build static site
+        run: hugo -s website/hugo/vmorganpWebsite
+
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.access_key }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.secret_key }}
+        run: |
+          cd infrastructure
+          terraform init 
+          terraform apply -auto-approve

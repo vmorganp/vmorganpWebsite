@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "host_bucket" {
 
   website {
     index_document = "index.html"
-    error_document = "error.html"
+    error_document = "404.html"
   }
   server_side_encryption_configuration {
     rule {
@@ -39,17 +39,12 @@ data "aws_iam_policy_document" "s3_bucket_policy" {
 
 # the files that go into the bucket, these are all webpages
 resource "aws_s3_bucket_object" "website" {
-  bucket       = aws_s3_bucket.host_bucket.id
-  key          = "index.html"
-  source       = "../website/index.html"
-  etag         = filemd5("../website/index.html")
-  content_type = "text/html"
-}
+  for_each = fileset("../website/hugo/vmorganpWebsite/public", "*")
 
-resource "aws_s3_bucket_object" "error_page" {
-  bucket       = aws_s3_bucket.host_bucket.id
-  key          = "error.html"
-  source       = "../website/error.html"
-  etag         = filemd5("../website/error.html")
-  content_type = "text/html"
+  bucket = aws_s3_bucket.host_bucket.id
+  key    = each.value
+  source = "../website/hugo/vmorganpWebsite/public/${each.value}"
+  etag   = filemd5("../website/hugo/vmorganpWebsite/public/${each.value}")
+  # content_type = "text/html"
+  content_type = element(split(".", each.value), length(split(".", each.value)) - 1) == "html" ? "text/html" : null
 }

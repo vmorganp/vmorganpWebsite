@@ -24,10 +24,10 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   aliases             = [local.site_name]
 
   custom_error_response {
-    error_caching_min_ttl=0
-    error_code=404
-    response_code = 404
-    response_page_path="/error.html"
+    error_caching_min_ttl = 0
+    error_code            = 404
+    response_code         = 404
+    response_page_path    = "/404.html"
   }
 
   default_cache_behavior {

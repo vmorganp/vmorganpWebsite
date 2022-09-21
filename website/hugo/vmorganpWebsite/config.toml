@@ -1,0 +1,4 @@
+baseURL = 'http://vmorganp.com/'
+languageCode = 'en-us'
+# title = 'Morgan made a webs'
+theme="hugo-PaperMod"
