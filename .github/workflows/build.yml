@@ -10,6 +10,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: "recursive"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -29,7 +31,7 @@ jobs:
           terraform_version: 1.2.9
 
       - name: Hugo build static site
-        run: hugo -s website/hugo/vmorganpWebsite
+        run: hugo -s website/hugo/vmorganpWebsite --minify
 
       - name: Deploy
         run: |
