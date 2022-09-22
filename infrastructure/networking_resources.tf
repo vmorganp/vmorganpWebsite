@@ -5,7 +5,7 @@ resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
 # make my s3 site run on the cloudfront cdn with valid https
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name = aws_s3_bucket.host_bucket.website_endpoint
+    domain_name = aws_s3_bucket.host_bucket.website_domain
     origin_id   = local.origin_id
     custom_origin_config {
       http_port              = "80"
