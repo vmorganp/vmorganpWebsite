@@ -1,0 +1,43 @@
+baseURL: "https://vmorganp.com/"
+languageCode: "en-us"
+title: "VMorganP"
+theme: "hugo-PaperMod"
+minify:
+  disableXML: true
+
+enableRobotsTXT: true
+
+params:
+  ShowShareButtons: true
+  ShowReadingTime: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+
+  profileMode:
+    enabled: true
+    title: Van (Morgan) Patterson
+    imageUrl: ./profile.png
+    imageTitle: profile.png
+    # imageWidth: 120
+    # imageHeight: 120
+    buttons:
+      - name: Projects
+        url: ./projects
+      - name: About
+        url: ./about
+  socialIcons:
+    - name: github
+      url: https://github.com/vmorganp
+    - name: linkedin
+      url: https://www.linkedin.com/in/vanmorganpatterson/
+
+languages:
+  en:
+    menu:
+      main:
+        - name: Explore
+          url: tags/
+          weight: 10
+        - name: Github
+          url: https://github.com/vmorganp
