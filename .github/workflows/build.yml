@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: "recursive"
+          submodules: recursive
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -36,5 +36,5 @@ jobs:
       - name: Deploy
         run: |
           cd infrastructure
-          terraform init 
+          terraform init
           terraform apply -auto-approve
