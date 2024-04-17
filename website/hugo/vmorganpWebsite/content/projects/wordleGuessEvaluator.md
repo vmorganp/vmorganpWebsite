@@ -1,7 +1,7 @@
 ---
-title: 'Wordle Guess Evaluator'
+title: "Wordle Guess Evaluator"
 date: 2022-09-21T00:10:46-07:00
-tags: ['project']
+tags: ["project"]
 ---
 
 [Check it out](https://vmorganp.github.io/WordleGuessEvaluator/)
@@ -15,4 +15,4 @@ The real reason this exists, is because sometimes I'd make guesses that left me 
 
 # How
 
-Given a solution, and a guess for a particular game of wordle, as well as the word lists used by wordle, one can determine what words are left in the lists, and tell the user what those words are. 
+Given a solution, and a guess for a particular game of wordle, as well as the word lists used by wordle, one can determine what words are left in the lists, and tell the user what those words are.
