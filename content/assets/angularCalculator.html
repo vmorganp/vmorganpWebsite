@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+    </style>
+    <script>
+        "use strict"
+        let angularUnits = {
+            mil: 1,
+            moa: 0.290888,
+        }
+
+        let linearUnits = {
+            meter: 1,
+            centimeter: 0.01,
+            yard: 0.9144,
+            inch: 0.0254,
+        }
+
+        let directions = {
+            high: "down",
+            low: "up",
+            left: "right",
+            right: "left",
+        }
+
+        function calculate() {
+            document.getElementById("solution").innerText = ""
+            let inputs = {
+                corrections: [
+                    {
+                        direction: document.getElementById("elevationDirection").value,
+                        amount: document.getElementById("elevationOffAmount").value,
+                        unit: document.getElementById("elevationOffUnit").value,
+                    },
+                    {
+                        direction: document.getElementById("windageDirection").value,
+                        amount: document.getElementById("windageOffAmount").value,
+                        unit: document.getElementById("windageOffUnit").value,
+                    },
+                ],
+                range: document.getElementById("range").value,
+                rangeUnit: document.getElementById("rangeUnit").value,
+
+                scopeAmount: document.getElementById("scopeAmount").value,
+                scopeUnit: document.getElementById("scopeUnit").value,
+            }
+
+            inputs.corrections.forEach((correction) => {
+                let correctionInMils
+                if (correction.unit == "inch" || offUnit == "centimeter") {
+                    let offAmountInMeters = correction.amount * linearUnits[correction.unit]
+                    let rangeInMeters = inputs.range * linearUnits[inputs.rangeUnit]
+                    correctionInMils = (offAmountInMeters / rangeInMeters) * 1000
+                } else {
+                    correctionInMils = correction.amount * angularUnits[correction.unit]
+                }
+                let scopeMilsPerClick = inputs.scopeAmount * angularUnits[inputs.scopeUnit]
+                let clicks = Math.round(correctionInMils / scopeMilsPerClick)
+                document.getElementById("solution").innerText +=
+                    `${directions[correction.direction]} ${clicks} clicks\n`
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <select name="elevationDirection" id="elevationDirection">
+        <option value="high">high</option>
+        <option value="low">low</option>
+    </select>
+    <input id="elevationOffAmount" name="elevationOffAmount" />
+    <select name="elevationOffUnit" id="elevationOffUnit">
+        <option value="inch">inches</option>
+        <option value="centimeter">cm</option>
+        <option value="mil">mil</option>
+        <option value="moa">moa</option>
+    </select>
+    <br />
+
+    <select name="windageDirection" id="windageDirection">
+        <option value="left">left</option>
+        <option value="right">right</option>
+    </select>
+    <input id="windageOffAmount" name="windageOffAmount" />
+    <select name="windageOffUnit" id="windageOffUnit">
+        <option value="inch">inches</option>
+        <option value="centimeter">cm</option>
+        <option value="mil">mil</option>
+        <option value="moa">moa</option>
+    </select>
+    <br />
+
+    <label for="range">Range </label>
+    <input id="range" name="range" />
+    <select name="rangeUnit" id="rangeUnit">
+        <option value="yard">yards</option>
+        <option value="meter">meters</option>
+    </select>
+    <br /><br />
+
+    <label for="scopeAmount">One Click = </label>
+    <input id="scopeAmount" name="scopeAmount" />
+    <select name="scopeUnit" id="scopeUnit">
+        <option value="moa">moa</option>
+        <option value="mil">mil</option>
+    </select>
+    <br /><br />
+
+    <button onclick="calculate()">Calculate</button>
+    <p id="solution"></p>
+</body>
+
+</html>

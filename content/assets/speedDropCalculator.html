@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+
+<head>
+    <script>
+        class Point {
+            constructor(range, dropInMils) {
+                this.range = range
+                this.dropInMils = dropInMils
+            }
+            get offset() {
+                return this.range / 100 - this.dropInMils
+            }
+        }
+        function calculate() {
+            // populate points from user input
+            let inputTable = document.getElementById("inputs")
+            dopeMilInputs = inputTable.getElementsByTagName("input")
+            let points = []
+            for (i = 0; i < dopeMilInputs.length; i++) {
+                if (Number(dopeMilInputs[i].value) > 0) {
+                    points.push(new Point(dopeMilInputs[i].range, dopeMilInputs[i].value))
+                }
+            }
+
+            // calculate peak of deviation between trajectory and mil offset
+            let peakPoint = points[0]
+            for (let i = 1; i < points.length; i++) {
+                const point = points[i]
+                if (point.offset > peakPoint.offset) {
+                    peakPoint = point
+                }
+            }
+
+            // Calculate the constant to dial down
+            let tolerance = Number(document.getElementById("targetRadius").value)
+            if (tolerance == 0) {
+                alert("Add a tolerance")
+            }
+            const speedDropOffset = (peakPoint.offset - tolerance).toFixed(1)
+
+            // Calculate the nearest and furthest range where the offset gets you within tolerance
+            let minRange = 10000
+            let maxRange = 0
+            for (let i = 0; i < points.length; i++) {
+                const point = points[i]
+                if (Math.abs(point.offset - speedDropOffset) <= tolerance) {
+                    if (point.range < minRange) {
+                        minRange = point.range
+                    }
+                    if (point.range > maxRange) {
+                        maxRange = point.range
+                    }
+                }
+            }
+
+            document.getElementById("speedDropOffset").innerHTML =
+                "Dial DOWN by " +
+                speedDropOffset +
+                " mil.<br> Hold over one mil for every hundred yards for targets between " +
+                minRange +
+                " and " +
+                maxRange
+
+            let outputTable = document.getElementById("output")
+            outputTable.innerHTML = ""
+
+            // make headings
+            const headings = ["Yards", "Holdover (mil)", "POI (mil)", "POI (in)"]
+            let headingRow = document.createElement("tr")
+            for (const headingText of headings) {
+                const heading = document.createElement("th")
+                heading.textContent = headingText
+                headingRow.appendChild(heading)
+            }
+            outputTable.appendChild(headingRow)
+
+            for (const point of points) {
+                let row = document.createElement("tr")
+                data = [
+                    point.range,
+                    point.range / 100,
+                    (point.offset - speedDropOffset).toFixed(2),
+                    ((point.offset - speedDropOffset) * (0.036 * point.range)).toFixed(2) + "in.",
+                ]
+                for (const d of data) {
+                    let cell = document.createElement("td")
+                    cell.textContent = d
+                    row.appendChild(cell)
+                }
+                outputTable.appendChild(row)
+            }
+        }
+
+        function makeInputTable() {
+            let max = 1000
+            let tableStep = 50
+            inputTableStep = Number(document.getElementById("tableStep").value)
+            if (inputTableStep > 0) {
+                tableStep = inputTableStep
+            }
+            inputMax = Number(document.getElementById("maxRange").value)
+            if (inputMax > 0) {
+                max = inputMax
+            }
+
+            let table = document.getElementById("inputs")
+            table.innerHTML = ""
+
+            // make headings
+            const headings = ["Yards", "Drop (mils)"]
+            let headingRow = document.createElement("tr")
+            for (const headingText of headings) {
+                const heading = document.createElement("th")
+                heading.textContent = headingText
+                headingRow.appendChild(heading)
+            }
+            table.appendChild(headingRow)
+
+            // make input boxes for yardages
+            for (let i = 0; i <= max; i += tableStep) {
+                let row = document.createElement("tr")
+                // range
+                let rangeCell = document.createElement("td")
+                rangeCell.textContent = i
+                row.appendChild(rangeCell)
+
+                // input
+                let input = document.createElement("input")
+                input.type = "text"
+                input.placeholder = "0"
+                input.range = i
+                let inputCell = document.createElement("td")
+                inputCell.appendChild(input)
+                row.appendChild(inputCell)
+                table.append(row)
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #afafaf;
+        }
+    </style>
+</head>
+
+<body onload="makeInputTable()">
+    <h1>Speed Drop Calculator</h1>
+    <p>
+        Speed Drop is a way of estimating drop in a MIL reticle so that to hit a target at 300 yards,
+        you hold 3 mil of elevation. To hit at 550 yards, hold 5.5 mil, etc...
+    </p>
+
+    <p>This calculator will ONLY work if you are using a MIL reticle.</p>
+    <p>
+        Fill in your calculated drop in mils. If you haven't already, you can calculate that
+        <a href="https://www.hornady.com/team-hornady/ballistic-calculators/#!/4dof">here</a>
+        or
+        <a href="https://shooterscalculator.com/ballistic-trajectory-chart.php">here</a>.
+    </p>
+
+    <h1>Inputs:</h1>
+    <p>
+        <label for="targetRadius">Target size in mil (radius, usually something like .1-.3): </label>
+        <input id="targetRadius" name="targetRadius" />
+    </p>
+
+    <label for="maxRange">Max Range:</label>
+    <input id="maxRange" name="maxRange" placeholder="1000" />
+    <br />
+
+    <label for="tableStep">Table Step Length:</label>
+    <input id="tableStep" name="tableStep" placeholder="50" /><button onclick="makeInputTable()">
+        ReDraw Table
+    </button>
+
+    <table id="inputs"></table>
+
+    <button onclick="calculate()">Calculate</button>
+    <p id="speedDropOffset"></p>
+    <table id="output"></table>
+</body>
+
+</html>
