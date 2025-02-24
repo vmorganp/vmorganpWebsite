@@ -71,6 +71,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 }
 
+output "cloudfront_distribution_id" {
+  value = aws_cloudfront_distribution.s3_distribution.id
+}
 
 # routing resources
 resource "aws_route53_zone" "vmorganpcom" {
