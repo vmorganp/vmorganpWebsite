@@ -1,18 +1,16 @@
-# Quartz v4
+# This is the code for the vmorganp.com website
 
-> “[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important.” — Richard Hamming
+https://vmorganp.com
 
-Quartz is a set of tools that helps you publish your [digital garden](https://jzhao.xyz/posts/networked-thought) and notes as a website for free.
-Quartz v4 features a from-the-ground rewrite focusing on end-user extensibility and ease-of-use.
+[![terraform deploy](https://github.com/vmorganp/vmorganpwebsite/actions/workflows/build.yml/badge.svg)](https://github.com/vmorganp/vmorganpwebsite/actions/workflows/build.yml)
 
-🔗 Read the documentation and get started: https://quartz.jzhao.xyz/
+## Infrastructure
 
-[Join the Discord Community](https://discord.gg/cRFFHYye7t)
+- AWS Cloudfront
+- Terraform Managed
 
-## Sponsors
+## website
 
-<p align="center">
-  <a href="https://github.com/sponsors/jackyzha0">
-    <img src="https://cdn.jsdelivr.net/gh/jackyzha0/jackyzha0/sponsorkit/sponsors.svg" />
-  </a>
-</p>
+- Just personal blog type stuff. largely self serving
+
+## This is based on [quartz](https://github.com/jackyzha0/quartz) (tyty, I stand on giant's shoulders)
