@@ -43,13 +43,12 @@ jobs:
           # Deploy
           cd infrastructure
           terraform init
-          terraform apply -auto-approve
-          terraform output -raw cloudfront_distribution_id
+          # terraform apply -auto-approve
 
       - name: Invalidate
         run: |
-          pwd
+          cd infrastructure
           terraform output -raw cloudfront_distribution_id
           CF_DIST_ID="$(terraform output -raw cloudfront_distribution_id)"
           echo $CF_DIST_ID
-          # aws cloudfront create-invalidation --distribution-id $CF_DIST_ID --paths "/*"
+          aws cloudfront create-invalidation --distribution-id $CF_DIST_ID --paths "/*"
