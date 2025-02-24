@@ -22,14 +22,14 @@ resource "aws_s3_bucket_website_configuration" "web_config" {
   error_document {
     key = "404.html"
   }
-  routing_rule {
-    condition {
-      key_prefix_equals = "/"
-    }
-    redirect {
-      replace_key_prefix_with = "index.html"
-    }
-  }
+  # routing_rule {
+  #   condition {
+  #     key_prefix_equals = "/"
+  #   }
+  #   redirect {
+  #     replace_key_prefix_with = "index.html"
+  #   }
+  # }
 }
 
 # policy to allow the buvket to be accessed by cloudfront
