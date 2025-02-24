@@ -33,6 +33,11 @@ jobs:
         run: |
           npx quartz build
 
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
@@ -43,12 +48,10 @@ jobs:
           # Deploy
           cd infrastructure
           terraform init
-          # terraform apply -auto-approve
+          terraform apply -auto-approve
 
       - name: Invalidate
         run: |
           cd infrastructure
-          terraform output -raw cloudfront_distribution_id
           CF_DIST_ID="$(terraform output -raw cloudfront_distribution_id)"
-          echo $CF_DIST_ID
           aws cloudfront create-invalidation --distribution-id $CF_DIST_ID --paths "/*"
