@@ -47,6 +47,7 @@ jobs:
 
       - name: Invalidate
         run: |
+          terraform output -raw cloudfront_distribution_id
           CF_DIST_ID="$(terraform output -raw cloudfront_distribution_id)"
           echo $CF_DIST_ID
           # aws cloudfront create-invalidation --distribution-id $CF_DIST_ID --paths "/*"
