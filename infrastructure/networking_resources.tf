@@ -22,11 +22,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     }
   }
 
-  function_association {
-    event_type = "viewer-request"
-    function_arn= aws_cloudfront_function.fix_paths.arn
-  }
-
   restrictions {
     geo_restriction {
       restriction_type = "none"
@@ -60,6 +55,11 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
       cookies {
         forward = "none"
       }
+    }
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.fix_paths.arn
     }
   }
 
@@ -119,4 +119,3 @@ resource "aws_acm_certificate_validation" "validation" {
   certificate_arn         = aws_acm_certificate.cert.arn
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
-
