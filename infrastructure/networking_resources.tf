@@ -2,6 +2,13 @@ resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
   comment = "access-identity-${local.site_name}.s3.amazonaws.com"
 }
 
+resource "aws_cloudfront_function" "fix_paths" {
+  name    = "fix_paths"
+  runtime = "cloudfront-js-2.0"
+  publish = true
+  code    = file("${path.module}/function.js")
+}
+
 # make my s3 site run on the cloudfront cdn with valid https
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
@@ -13,6 +20,11 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
       origin_protocol_policy = "http-only"
       origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
+  }
+
+  function_association {
+    event_type = "viewer-request"
+    function_arn= aws_cloudfront_function.fix_paths.arn
   }
 
   restrictions {
@@ -58,6 +70,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     minimum_protocol_version = "TLSv1.2_2019"
   }
 }
+
 
 # routing resources
 resource "aws_route53_zone" "vmorganpcom" {
@@ -106,3 +119,4 @@ resource "aws_acm_certificate_validation" "validation" {
   certificate_arn         = aws_acm_certificate.cert.arn
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
+
