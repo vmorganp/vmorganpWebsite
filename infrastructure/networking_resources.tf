@@ -2,7 +2,6 @@ resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
   comment = "access-identity-${local.site_name}.s3.amazonaws.com"
 }
 
-
 # make my s3 site run on the cloudfront cdn with valid https
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
@@ -59,6 +58,10 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2019"
   }
+}
+
+output "cloudfront_distribution_id" {
+  value = aws_cloudfront_distribution.s3_distribution.id
 }
 
 # routing resources
