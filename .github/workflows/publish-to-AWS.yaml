@@ -34,6 +34,8 @@ jobs:
           npx quartz build
           # fix file refs per https://github.com/jackyzha0/quartz/issues/863
           for file in ./public/*.html; do
+            sed -i 's/<a href="\/"\([^>]*\)>/<a href="\/index.html"\1>/g' "$file"
+            sed -i 's/<a href="\."\([^>]*\)>/<a href="\.\/index.html"\1>/g' "$file"
             sed -i 's/<a href="\(\.\/[^"]*\)"\([^>]*\)>/<a href="\1.html"\2>/g' "$file"
           done
 
