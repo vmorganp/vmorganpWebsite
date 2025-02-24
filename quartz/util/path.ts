@@ -80,15 +80,8 @@ export function slugifyFilePath(fp: FilePath, excludeExt?: boolean): FullSlug {
   return (slug + ext) as FullSlug
 }
 
-// Replaced due to https://github.com/jackyzha0/quartz/issues/863
-// export function simplifySlug(fp: FullSlug): SimpleSlug {
-//   const res = stripSlashes(trimSuffix(fp, "index"), true)
-//   return (res.length === 0 ? "/" : res) as SimpleSlug
-// }
-
 export function simplifySlug(fp: FullSlug): SimpleSlug {
   const res = stripSlashes(trimSuffix(fp, "index"), true)
-  .replace(/^(([^#\/]\/)*[^#\.\/]+)(#[^\/]*)?$/, '$1.html$3')
   return (res.length === 0 ? "/" : res) as SimpleSlug
 }
 
