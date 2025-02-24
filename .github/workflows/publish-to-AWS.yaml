@@ -44,9 +44,11 @@ jobs:
           cd infrastructure
           terraform init
           terraform apply -auto-approve
+          terraform output -raw cloudfront_distribution_id
 
       - name: Invalidate
         run: |
+          pwd
           terraform output -raw cloudfront_distribution_id
           CF_DIST_ID="$(terraform output -raw cloudfront_distribution_id)"
           echo $CF_DIST_ID
