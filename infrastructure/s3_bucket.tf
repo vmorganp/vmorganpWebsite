@@ -55,7 +55,7 @@ locals {
   mime_types = {
     "html" : "text/html",
     "css" : "text/css",
-    "js" : "text/js",
+    "js" : "text/javascript",
     "xml" : "application/xml",
   }
 }
