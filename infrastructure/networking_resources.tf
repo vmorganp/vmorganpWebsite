@@ -2,6 +2,27 @@ resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
   comment = "access-identity-${local.site_name}.s3.amazonaws.com"
 }
 
+resource "aws_cloudfront_function" "pretty_urls" {
+  name    = "prettyish-urls"
+  runtime = "cloudfront-js-1.0"
+  comment = "Rewrites URIs to support pretty URLs"
+
+  code = <<-EOT
+    function handler(event) {
+      var request = event.request;
+      var uri = request.uri;
+
+      if (uri.endsWith('/')) {
+        request.uri += 'index.html';
+      } else if (!uri.includes('.')) {
+        request.uri += '.html';
+      }
+
+      return request;
+    }
+  EOT
+}
+
 # make my s3 site run on the cloudfront cdn with valid https
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
@@ -42,6 +63,11 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     min_ttl                = 0
     default_ttl            = 3600
     max_ttl                = 86400
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.pretty_urls.arn
+    }
 
     forwarded_values {
       query_string = false
