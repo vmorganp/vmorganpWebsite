@@ -12,11 +12,8 @@ const config: QuartzConfig = {
         pageTitleSuffix: "",
         enableSPA: true,
         enablePopovers: true,
-        analytics: {
-            provider: "plausible",
-        },
         locale: "en-US",
-        baseUrl: "quartz.jzhao.xyz",
+        baseUrl: "vmorganp.com",
         ignorePatterns: ["private", "templates/**", ".obsidian"],
         defaultDateType: "created",
         generateSocialImages: false,
