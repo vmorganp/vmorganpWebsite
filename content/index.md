@@ -8,10 +8,5 @@ I'm Morgan, and this is my self serving collection of resources and knowledge.
 
 If there's something you'd like to see or change, feel free to suggest over [here](https://github.com/vmorganp/vmorganpWebsite/issues)
 
-[[Ballistics]]
+For browsing around, try the tags page found [here](https://vmorganp.com/tags/index.html)
 
-[[Projects]]
-
-[[Recipes]]
-
-To see an index of everything here, checkout the [[/tags]] page
