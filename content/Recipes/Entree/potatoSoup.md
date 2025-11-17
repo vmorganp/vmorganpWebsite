@@ -13,6 +13,7 @@ Total: 70 mins
 Servings: 8
 
 # Ingredients
+
 [[UnitConversions | Unit Conversions]]
 
 - [ ] 1 1/2 pounds baking potatoes
@@ -28,7 +29,13 @@ Servings: 8
 - [ ] 1 cup milk
 - [ ] salt to taste
 - [ ] white pepper to taste
-- [ ] Ham, if you're into that
+
+## Optional
+
+- [ ] Ham
+- [ ] Cheddar cheese
+- [ ] Scallions
+- [ ] Bacon
 
 # Steps
 
@@ -47,10 +54,5 @@ Servings: 8
 1. Add milk and cream, stirring until smooth and slightly thickened.
 1. Simmer lightly for 15 minutes – DO NOT BOIL.
 1. Top each serving with grated Cheddar cheese, sliced scallions & bacon pieces.
-
-# Tips
-
-- Substitute two of the 5 cups of water for 2 cups chicken broth for more flavor.
-- Use 2 cans of carnation milk instead of heavy cream and regular milk (cuts down on calories from the heavy cream.)
 
 source: Houlihans copycat
