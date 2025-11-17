@@ -4,10 +4,6 @@ tags:
   - recipe/dessert
 ---
 
-# Banana Bread
-
-Source:
-
 ## Time
 
 | Prep Time | Cook Time   | Total Time  | Servings |
