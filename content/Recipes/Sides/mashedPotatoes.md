@@ -16,8 +16,6 @@ Servings: 2
 # Ingredients
 [[UnitConversions | Unit Conversions]]
 
-Kosher salt
-
 - [ ] 1 1/2 pounds Yukon Gold potatoes
 - [ ] 1/2 cup whole milk or heavy cream, plus more as needed
 - [ ] 1 tablespoon unsalted butter, plus more as needed
