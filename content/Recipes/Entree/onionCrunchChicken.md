@@ -23,6 +23,6 @@ Servings: 2
 3. stir in shredded monterey jack cheese
 4. pat chicken dry with paper towels and place on baking sheet
 5. Season chicken all over with salt and pepper
-6. Evenly spread tops of chicken with [[Honey Dijon Dressing]]
+6. Evenly spread tops of chicken with [[honeyDijon | Honey Dijon]]
 7. Mound coated chicken tops with onion/cheese mixture, pressing to adhere
 8. Bake in oven until cooked (15-20 minutes)
